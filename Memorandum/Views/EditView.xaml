@@ -1,0 +1,33 @@
+﻿<Page
+    x:Class="Memorandum.EditView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Memorandum"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <Grid x:Name="editGrid" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Border Background="{ThemeResource SystemControlBackgroundAccentBrush}"></Border>
+        <StackPanel HorizontalAlignment="Left">
+            <AppBarButton ToolTipService.ToolTip="Home" Icon="Home" RequestedTheme="Dark" Height="46" Width="51"/>
+        </StackPanel>
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <FontIcon Glyph="&#xE70F;" RenderTransformOrigin="0.5,0.5" Foreground="White">
+                <FontIcon.RenderTransform>
+                    <CompositeTransform Rotation="-90"/>
+                </FontIcon.RenderTransform>
+            </FontIcon>
+            <TextBox Width="200" TextAlignment="Center" BorderThickness="0" VerticalAlignment="Center" FontSize="18" Background="{x:Null}" RequestedTheme="Dark" PlaceholderText="Untitled" IsSpellCheckEnabled="False" Style="{StaticResource TitleEditBoxStyle}" Text="Untitled"/>
+        </StackPanel>
+        <StackPanel HorizontalAlignment="Right">
+            <AppBarButton ToolTipService.ToolTip="Save" Icon="Save" RequestedTheme="Dark" Height="46" Width="51"/>
+        </StackPanel>
+        <!--<RichEditBox x:Name="fakeEditBox" Grid.Row="1" BorderThickness="0" FontFamily="Calibri" Margin="0,10,0,0" Width="600" Height="700" FontSize="20"/>-->
+        <RichEditBox x:Name="editBox" Grid.Row="1" ClipboardCopyFormat="PlainText" BorderThickness="0" FontFamily="Calibri" Margin="0,10,0,0" FontSize="20" Paste="editBox_Paste"/>
+    </Grid>
+</Page>
