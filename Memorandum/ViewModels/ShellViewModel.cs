@@ -51,7 +51,7 @@ namespace Memorandum.ViewModels
                     note.Content = content;
                 }
                 note.Title = file.DisplayName;
-                note.Date = file.DateCreated.ToString();
+                note.Date = file.DateCreated.ToString(@"dd/MM/yy hh:mm:ss");
                 NoteCollection.Add(note);
             }
         }

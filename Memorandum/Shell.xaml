@@ -24,9 +24,11 @@
         <GridView x:Name="noteGrid" Grid.Row="1" ItemsSource="{Binding NoteCollection}" Background="#FFEEEEEE" SelectionChanged="noteGrid_SelectionChanged">
             <GridView.ItemTemplate>
                 <DataTemplate>
-                    <local:CompositionShadow BlurRadius="5" ShadowOpacity=".6" OffsetX="0" OffsetY="0">
-                    <Border Background="#FFF0F0F0" CornerRadius="3" Height="300" Width="250">
-                        <Grid>
+                   
+                            <StackPanel>
+                        <local:CompositionShadow BlurRadius="5" ShadowOpacity=".6" OffsetX="0" OffsetY="0">
+                            <Border Background="#FFF0F0F0" CornerRadius="3" Height="320" Width="250">
+                                <Grid Height="300">
                             <RichEditBox Margin="10,10,10,0" ScrollViewer.VerticalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollMode="Disabled"  Attached:GetRichTextAttachedProperty.RichText="{Binding Path=Content, Mode=OneWay}" BorderThickness="0" Background="{x:Null}" ></RichEditBox>
                             <Border>
                                 <Border.Background>
@@ -39,8 +41,13 @@
                             <!--<Image Source="Assets/anyonehavesomeotherwallpaperslikethisonelikedark_e66258d594bd46f5fb4cde01c2e4fc1d.jpg" Stretch="UniformToFill"/>-->
                                 <TextBlock Text="{Binding Title}" VerticalAlignment="Bottom" TextAlignment="Center" FontSize="18" TextWrapping="WrapWholeWords" TextTrimming="CharacterEllipsis" Margin="0,0,0,10" MaxLines="2" FontFamily="Ubuntu Mono"/>
                         </Grid>
-                    </Border>
-                    </local:CompositionShadow>                  
+                               
+                            </Border>
+                        </local:CompositionShadow>
+                        <TextBlock Text="{Binding Date}" VerticalAlignment="Bottom" TextAlignment="Center" FontSize="18" TextWrapping="WrapWholeWords" TextTrimming="CharacterEllipsis" Margin="0,10,0,0" MaxLines="1" FontFamily="Ubuntu Mono"/>
+
+                    </StackPanel>
+                   
                 </DataTemplate>
             </GridView.ItemTemplate>
             <GridView.ItemsPanel>

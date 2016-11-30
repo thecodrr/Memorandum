@@ -30,8 +30,7 @@ namespace Memorandum
             var vm = new ShellViewModel();
             noteGrid.DataContext = vm;
             this.DataContext = vm;
-        }
-        
+        }       
 
         private void noteGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {

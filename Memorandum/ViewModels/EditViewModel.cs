@@ -24,7 +24,7 @@ namespace Memorandum.ViewModels
         async void Save(object para)
         {
             string substring = Content.Length >150 ? Content.Remove(150) : Content;
-            string alterTitle = substring.Substring(0, substring.IndexOf('.'));
+            string alterTitle = substring.Contains(".")?substring.Substring(0, substring.IndexOf('.')) : substring;
             string docName = !string.IsNullOrEmpty(Note.Title) ? Note.Title : alterTitle;
             using (var stream = await(await ApplicationData.Current.LocalFolder.CreateFileAsync(docName.Trim() + ".rtf", CreationCollisionOption.ReplaceExisting)).OpenAsync(FileAccessMode.ReadWrite))
             {
