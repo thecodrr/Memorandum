@@ -5,29 +5,31 @@
     xmlns:local="using:Memorandum"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:Attached="using:Memorandum.AttachedProperties"
+      xmlns:Interactivity="using:Microsoft.Xaml.Interactivity" 
+    xmlns:Core="using:Microsoft.Xaml.Interactions.Core" 
     mc:Ignorable="d">
 
     <Grid x:Name="editGrid" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
-        <Border Background="{ThemeResource SystemControlBackgroundAccentBrush}"></Border>
+        <Grid Background="{ThemeResource SystemControlBackgroundAccentBrush}" Height="60"/>
         <StackPanel HorizontalAlignment="Left">
-            <AppBarButton ToolTipService.ToolTip="Home" Icon="Home" RequestedTheme="Dark" Height="46" Width="51"/>
+            <AppBarButton ToolTipService.ToolTip="Home" Height="60" Command="{Binding GoHomeCommand}" Icon="Home" RequestedTheme="Dark" Style="{StaticResource CustomAppBarButtonStyle}"/>
         </StackPanel>
-        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
-            <FontIcon Glyph="&#xE70F;" RenderTransformOrigin="0.5,0.5" Foreground="White">
-                <FontIcon.RenderTransform>
-                    <CompositeTransform Rotation="-90"/>
-                </FontIcon.RenderTransform>
-            </FontIcon>
-            <TextBox Width="200" TextAlignment="Center" BorderThickness="0" VerticalAlignment="Center" FontSize="18" Background="{x:Null}" RequestedTheme="Dark" PlaceholderText="Untitled" IsSpellCheckEnabled="False" Style="{StaticResource TitleEditBoxStyle}" Text="Untitled"/>
+        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+            <TextBlock Text="{Binding WordCount, UpdateSourceTrigger=PropertyChanged, FallbackValue='0 words'}" x:Name="WordCount" RequestedTheme="Dark" FontFamily="Berlin Sans FB" FontSize="24"/>
         </StackPanel>
         <StackPanel HorizontalAlignment="Right">
-            <AppBarButton ToolTipService.ToolTip="Save" Icon="Save" RequestedTheme="Dark" Height="46" Width="51"/>
+            <AppBarButton ToolTipService.ToolTip="Save" Height="60" Command="{Binding SaveCommand}" CommandParameter="{Binding ElementName=editBox, Path=Document}" Icon="Save" RequestedTheme="Dark" Style="{StaticResource CustomAppBarButtonStyle}"/>
         </StackPanel>
         <!--<RichEditBox x:Name="fakeEditBox" Grid.Row="1" BorderThickness="0" FontFamily="Calibri" Margin="0,10,0,0" Width="600" Height="700" FontSize="20"/>-->
-        <RichEditBox x:Name="editBox" Grid.Row="1" ClipboardCopyFormat="PlainText" BorderThickness="0" FontFamily="Calibri" Margin="0,10,0,0" FontSize="20" Paste="editBox_Paste"/>
+        <RichEditBox x:Name="editBox" Attached:GetRichTextAttachedProperty.RichText="{Binding Path=Note.Content, UpdateSourceTrigger=Explicit, Mode=TwoWay}" PlaceholderText="your thoughts here..." Grid.Row="1" ClipboardCopyFormat="PlainText" BorderThickness="0" FontFamily="Calibri Light" Margin="0,10,0,0" Padding="100,50,100,0" FontSize="20" Paste="editBox_Paste" TextChanged="editBox_TextChanged"></RichEditBox>
+        <TextBox x:Name="title" Text="{Binding Path=Note.Title, Mode=TwoWay}" TextAlignment="Center" BorderThickness="0" VerticalAlignment="Top" FontSize="26" Background="{x:Null}" PlaceholderText="Title" IsSpellCheckEnabled="False" Style="{StaticResource TitleEditBoxStyle}" FontFamily="Berlin Sans FB" Margin="0,10,0,0" Grid.Row="1" Height="37" HorizontalAlignment="Center"/>
     </Grid>
 </Page>

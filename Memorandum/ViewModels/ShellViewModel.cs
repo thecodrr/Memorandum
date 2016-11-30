@@ -6,11 +6,27 @@ using System.Threading.Tasks;
 using Windows.Storage;
 using Memorandum.Model;
 using Windows.Storage.Search;
+using System.IO;
+using Windows.UI.Text;
+using System.Windows.Input;
+using Windows.UI.Xaml;
+using Windows.UI.Xaml.Controls;
 
 namespace Memorandum.ViewModels
 {
     public class ShellViewModel : ViewModelBase
     {
+        DelegateCommand _newNoteCommand;
+        public ICommand NewNoteCommand
+        {
+            get
+            { if (_newNoteCommand == null) { _newNoteCommand = new DelegateCommand(NewNote); } return _newNoteCommand; }
+        }
+        void NewNote()
+        {
+            var frame = Window.Current.Content as Frame;
+            frame.Navigate(typeof(EditView), new Note());
+        }
         ThreadSafeObservableCollection<Note> noteCollection = new ThreadSafeObservableCollection<Note>();
         public ThreadSafeObservableCollection<Note> NoteCollection
         {
@@ -29,6 +45,11 @@ namespace Memorandum.ViewModels
             {
                 Note note = new Note();
                 note.FileName = file.DisplayName + file.FileType;
+                using (var stream = new StreamReader(await (await Windows.Storage.ApplicationData.Current.LocalFolder.GetFileAsync(note.FileName)).OpenStreamForReadAsync()))
+                {
+                    string content = await stream.ReadToEndAsync();
+                    note.Content = content;
+                }
                 note.Title = file.DisplayName;
                 note.Date = file.DateCreated.ToString();
                 NoteCollection.Add(note);

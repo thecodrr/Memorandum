@@ -14,17 +14,20 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
-         <Grid Background="{ThemeResource SystemControlBackgroundAccentBrush}" Height="70">
-            <TextBlock Text="Memorandum" RequestedTheme="Dark" Margin="40,0,0,0" FontSize="36" VerticalAlignment="Center" FontFamily="Berlin Sans FB"/>
-        </Grid>
+         <Grid Background="{ThemeResource SystemControlBackgroundAccentBrush}" Height="60">
+            <TextBlock Text="Memorandum" RequestedTheme="Dark" Margin="40,0,0,0" FontSize="25" HorizontalAlignment="Left" VerticalAlignment="Center" FontFamily="Berlin Sans FB"/>
+            <StackPanel HorizontalAlignment="Right">
+                <AppBarButton ToolTipService.ToolTip="New Note" Command="{Binding NewNoteCommand}" RequestedTheme="Dark" Icon="Add" Style="{StaticResource CustomAppBarButtonStyle}" Height="60"></AppBarButton>
+            </StackPanel>
+         </Grid>
      
         <GridView x:Name="noteGrid" Grid.Row="1" ItemsSource="{Binding NoteCollection}" Background="#FFEEEEEE" SelectionChanged="noteGrid_SelectionChanged">
             <GridView.ItemTemplate>
                 <DataTemplate>
-                    <local:CompositionShadow BlurRadius="8" ShadowOpacity=".6" OffsetX="0" OffsetY="0">
+                    <local:CompositionShadow BlurRadius="5" ShadowOpacity=".6" OffsetX="0" OffsetY="0">
                     <Border Background="#FFF0F0F0" CornerRadius="3" Height="300" Width="250">
                         <Grid>
-                            <RichEditBox Margin="10,10,10,0" Attached:GetRichTextAttachedProperty.RichText="{Binding Path=FileName, Mode=OneWay}" BorderThickness="0" Background="{x:Null}" ></RichEditBox>
+                            <RichEditBox Margin="10,10,10,0" ScrollViewer.VerticalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollMode="Disabled"  Attached:GetRichTextAttachedProperty.RichText="{Binding Path=Content, Mode=OneWay}" BorderThickness="0" Background="{x:Null}" ></RichEditBox>
                             <Border>
                                 <Border.Background>
                                     <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,-1">

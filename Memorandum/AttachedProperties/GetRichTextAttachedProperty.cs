@@ -29,14 +29,19 @@ namespace Memorandum.AttachedProperties
         private static async void callback(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             var reb = (RichEditBox)d;
-            string fileURI = (string)e.NewValue;
-            if(fileURI != null)
-            using (var stream = new StreamReader(await(await Windows.Storage.ApplicationData.Current.LocalFolder.GetFileAsync(fileURI)).OpenStreamForReadAsync()))
-            {
-                string content = await stream.ReadToEndAsync();
+            string content = (string)e.NewValue;
+            if (content != null)
                 reb.Document.SetText(TextSetOptions.FormatRtf, content);
-                reb.IsReadOnly = true;
-            }
+            
+            //var reb = (RichEditBox)d;
+            //string fileURI = (string)e.NewValue;
+            //if(fileURI != null)
+            //using (var stream = new StreamReader(await(await Windows.Storage.ApplicationData.Current.LocalFolder.GetFileAsync(fileURI)).OpenStreamForReadAsync()))
+            //{
+            //    string content = await stream.ReadToEndAsync();
+            //    reb.Document.SetText(TextSetOptions.FormatRtf, content);
+            //    reb.IsReadOnly = true;
+            //}
         }
 
     }

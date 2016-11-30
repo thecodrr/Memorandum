@@ -11,6 +11,12 @@ namespace Memorandum.Model
         string title;
         string fileName;
         string date;
+        string content;
+        public string Content
+        {
+            get { return content; }
+            set { Set(ref content, value); }
+        }
         public string Title
         {
             get { return title; }
