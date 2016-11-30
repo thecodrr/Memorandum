@@ -11,6 +11,7 @@ using Windows.UI.Text;
 using System.Windows.Input;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Media.Animation;
 
 namespace Memorandum.ViewModels
 {

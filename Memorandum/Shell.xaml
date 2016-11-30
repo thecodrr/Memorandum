@@ -8,8 +8,50 @@
     xmlns:Attached="using:Memorandum.AttachedProperties"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
+    <Page.Resources>
+        <DataTemplate x:Key="MobileDataTemplate">
+            <StackPanel>
+                <local:CompositionShadow BlurRadius="5" ShadowOpacity=".6" OffsetX="0" OffsetY="0">
+                    <Border Background="#FFF0F0F0" CornerRadius="3" Height="200" Width="150">
+                        <Grid>
+                            <RichEditBox Margin="10,10,10,0" ScrollViewer.VerticalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollMode="Disabled"  Attached:GetRichTextAttachedProperty.RichText="{Binding Path=Content, Mode=OneWay}" BorderThickness="0" Background="{x:Null}" ></RichEditBox>
+                            <Border>
+                                <Border.Background>
+                                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,-1">
+                                        <GradientStop Offset="0.534" Color="Transparent"/>
+                                        <GradientStop Color="#FFF4F4F4" Offset="1"/>
+                                    </LinearGradientBrush>
+                                </Border.Background>
+                            </Border>
+                            <!--<Image Source="Assets/anyonehavesomeotherwallpaperslikethisonelikedark_e66258d594bd46f5fb4cde01c2e4fc1d.jpg" Stretch="UniformToFill"/>-->
+                            <TextBlock Text="{Binding Title}" VerticalAlignment="Bottom" TextAlignment="Center" FontSize="18" TextWrapping="WrapWholeWords" TextTrimming="CharacterEllipsis" Margin="0,0,0,10" MaxLines="2" FontFamily="Ubuntu Mono"/>
+                        </Grid>
 
+                    </Border>
+                </local:CompositionShadow>
+                <TextBlock Text="{Binding Date}" VerticalAlignment="Bottom" TextAlignment="Center" FontSize="18" TextWrapping="WrapWholeWords" TextTrimming="CharacterEllipsis" Margin="0,10,0,0" MaxLines="1" FontFamily="Ubuntu Mono"/>
+
+            </StackPanel>
+        </DataTemplate>
+    </Page.Resources>
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup>
+                <VisualState>
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="800"/>
+                    </VisualState.StateTriggers>
+                </VisualState>
+                <VisualState>
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="0"/>
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="noteGrid.ItemTemplate" Value="{StaticResource MobileDataTemplate}"/>
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition/>
@@ -27,8 +69,8 @@
                    
                             <StackPanel>
                         <local:CompositionShadow BlurRadius="5" ShadowOpacity=".6" OffsetX="0" OffsetY="0">
-                            <Border Background="#FFF0F0F0" CornerRadius="3" Height="320" Width="250">
-                                <Grid Height="300">
+                            <Border Background="#FFF0F0F0" CornerRadius="3" Height="300" Width="250">
+                                <Grid>
                             <RichEditBox Margin="10,10,10,0" ScrollViewer.VerticalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollMode="Disabled"  Attached:GetRichTextAttachedProperty.RichText="{Binding Path=Content, Mode=OneWay}" BorderThickness="0" Background="{x:Null}" ></RichEditBox>
                             <Border>
                                 <Border.Background>

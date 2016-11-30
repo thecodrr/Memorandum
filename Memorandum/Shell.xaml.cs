@@ -13,6 +13,7 @@ using Windows.UI.Xaml.Controls.Primitives;
 using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
+using Windows.UI.Xaml.Media.Animation;
 using Windows.UI.Xaml.Navigation;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=234238
@@ -30,6 +31,12 @@ namespace Memorandum
             var vm = new ShellViewModel();
             noteGrid.DataContext = vm;
             this.DataContext = vm;
+            TransitionCollection collection = new TransitionCollection();
+            NavigationThemeTransition theme = new NavigationThemeTransition();
+            var info = new EntranceNavigationTransitionInfo();
+            theme.DefaultNavigationTransitionInfo = info;
+            collection.Add(theme);
+            this.Transitions = collection;
         }       
 
         private void noteGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)

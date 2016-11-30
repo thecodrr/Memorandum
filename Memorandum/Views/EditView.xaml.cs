@@ -17,6 +17,7 @@ using Memorandum.Model;
 using Windows.UI.Text;
 using System.Text.RegularExpressions;
 using Memorandum.ViewModels;
+using Windows.UI.Xaml.Media.Animation;
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
 
 namespace Memorandum
@@ -31,6 +32,12 @@ namespace Memorandum
         {
             this.InitializeComponent();
             this.DataContext = EditVM;
+            TransitionCollection collection = new TransitionCollection();
+            NavigationThemeTransition theme = new NavigationThemeTransition();
+            var info = new EntranceNavigationTransitionInfo();
+            theme.DefaultNavigationTransitionInfo = info;
+            collection.Add(theme);
+            this.Transitions = collection;
         }
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
