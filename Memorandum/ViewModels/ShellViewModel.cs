@@ -40,7 +40,7 @@ namespace Memorandum.ViewModels
         }
         public async void FillCollection()
         {
-            var queryOptions = new QueryOptions(CommonFileQuery.DefaultQuery, new List<string> { ".rtf", ".txt" });
+            var queryOptions = new QueryOptions(CommonFileQuery.DefaultQuery, new List<string> { ".rtf", ".txt", ".mem" });
             var fileCol = await ApplicationData.Current.LocalFolder.CreateFileQueryWithOptions(queryOptions).GetFilesAsync();
             foreach(var file in fileCol)
             {

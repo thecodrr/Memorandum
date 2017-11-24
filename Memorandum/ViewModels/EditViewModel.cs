@@ -1,6 +1,7 @@
 ﻿using Memorandum.Model;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -22,11 +23,17 @@ namespace Memorandum.ViewModels
             { if (_saveCommand == null) { _saveCommand = new RelayCommand(param => Save(param)); } return _saveCommand; }
         }
         async void Save(object para)
-        {
+        {            
             string substring = Content.Length >150 ? Content.Remove(150) : Content;
             string alterTitle = substring.Contains(".")?substring.Substring(0, substring.IndexOf('.')) : substring;
             string docName = !string.IsNullOrEmpty(Note.Title) ? Note.Title : alterTitle;
-            using (var stream = await(await ApplicationData.Current.LocalFolder.CreateFileAsync(docName.Trim() + ".rtf", CreationCollisionOption.ReplaceExisting)).OpenAsync(FileAccessMode.ReadWrite))
+            if (!string.IsNullOrEmpty(Note.FileName) && !Note.FileName.Equals(Path.Combine(ApplicationData.Current.LocalFolder.Path, docName + ".mem")))
+            {
+                var oldFile = await StorageFile.GetFileFromPathAsync(Note.FileName);
+                await oldFile.DeleteAsync(StorageDeleteOption.PermanentDelete);
+                Note.FileName = Path.Combine(ApplicationData.Current.LocalFolder.Path, docName + ".mem");
+            }            
+            using (var stream = await(await ApplicationData.Current.LocalFolder.CreateFileAsync(docName.Trim() + ".mem", CreationCollisionOption.ReplaceExisting)).OpenAsync(FileAccessMode.ReadWrite))
             {
                 (para as ITextDocument).SaveToStream(TextGetOptions.FormatRtf, stream);
             }
@@ -47,9 +54,9 @@ namespace Memorandum.ViewModels
         }
         public EditViewModel()
         {
-            this.PropertyChanged += EditViewModel_PropertyChanged;
+            this.PropertyChanged += OnPropertyChanged;
         }
-        private void EditViewModel_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        private void OnPropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
             if (e.PropertyName == "Content")
                 WordCount = CountWords(Content).ToString() + " words";
@@ -79,7 +86,5 @@ namespace Memorandum.ViewModels
             return collection.Count;
         }
     }
-
-  
 }
 
